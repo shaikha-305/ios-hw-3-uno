@@ -88,18 +88,29 @@ var wild_Draw = UIImage(named: "Wild_Draw.png")
 /// قم بإنشاء الستركت هنا
 
 // struct ...
-struct Card {
+struct Card
+{
     var color: String?
     var number: Int?
     var action: String?
     
-    func imageName() -> String{
-        return "\(color)_\(number)"
+    func imageName() -> String
+    {
+        if color != "Wild"  && number != nil && action == nil
+       {
+            return "\(color!)_\(number!)"
+        } else if color != "Wild" && number == nil && action != nil {
+            return "\(color!)_\(action!)"
+        } else if color == "Wild" && number == nil && action != nil {
+            return "\(action!)"
+       }
+        return ""
     }
 }
+
 var colors = ["Blue", "Green", "Red", "Yellow", "Wild"]
 var actions = ["Reverse", "Skip", "Draw"]
-var wildActions = ["Wild", "Wild Draw"]
+var wildActions = ["Wild", "Wild_Draw"]
 var cards: [Card] = []
 for color in colors
 {
@@ -110,14 +121,14 @@ for color in colors
         var sampleCard = Card(color: color, number: num)
         
         cards.append(sampleCard)
-        if sampleCard.number != 0 || sampleCard.action != "Wild Draw" || sampleCard.action != "Change Color"
-        {
+        if sampleCard.number != 0{
             cards.append(sampleCard)
         }
         
     }
     for action1 in actions{
         var sampleCard = Card(color: color, action: action1)
+        cards.append(sampleCard)
     }
     } else if color == "Wild" {
         for action in wildActions {
